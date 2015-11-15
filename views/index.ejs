@@ -1,11 +1,41 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+	<head>
+		<title>BalajiGeek News</title>
+		<script src="/javascripts/angular.min.js"></script>
+		<script src="/javascripts/angular-ui-router.js"></script>
+		<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+		<script src="/javascripts/angularApp.js"></script>
+	</head>
+
+	<body ng-app="balajinews" >
+		
+		
+		<div class="row">
+   			 <div class="col-md-6 col-md-offset-3">
+     			 <ui-view></ui-view>
+   			 </div>
+ 		 </div>
+
+ 		 <script type="text/ng-template" id="/home.html">
+	 		 <div class="page-header">
+	 			   <h1>Balaji Geeky News</h1>
+	 		 </div>
+
+			<div ng-repeat="post in posts | orderBy: 'upvotes' ">
+
+				<span class="glyphicon glyphicon-chevron-up"></span>
+				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
+				<span ng-hide="post.url">{{post.title}}</span>
+				| {{post.upvotes}} (SiteName)
+				
+
+			</div>
+			
+		</script>	
+
+		
+
+ 	 
+	</body>
 </html>
