@@ -20,9 +20,10 @@
  		 <script type="text/ng-template" id="/home.html">
 	 		 <div class="page-header">
 	 			   <h1>Balaji Geeky News</h1>
+	 			   <h2><a ng-click="moveToPost()"> Add New Post</a></h2>
 	 		 </div>
 
-			<div ng-repeat="post in posts | orderBy: 'upvotes' ">
+			<div ng-repeat="post in posts | orderBy: ['-createddate','-upvotes']  ">
 
 				<span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-chevron-up"></span>
 				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
@@ -33,8 +34,18 @@
 			</div>
 			
 		</script>	
-
-		
+ 	
+		<script type="text/ng-template" id="/post.html">
+ 			<div class="page-header">
+	 			   <h1>Balaji Geeky News</h1>
+	 		 </div>		
+			 <form ng-submit='addPost()'>
+				<input type="text" placeholder="Title" ng-model="title"></input><br>
+				<br>
+				<input type="text" placeholder="URL" ng-model="url"></input><br><br>
+				<button ng-click='submit'>Post</button>
+			</form>
+		</script>
 
  	 
 	</body>
