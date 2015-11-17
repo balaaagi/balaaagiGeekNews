@@ -4,11 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request=require('request');
+var jsdom=require('jsdom');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var weburl;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,8 +68,44 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-routes.post('/processurl',function(req,res){
-  console.log(req.body.weburl);
+routes.get('/processTitle',function(req,res){
+  var weburl=req.headers.weburl;
+  var origUrl=weburl;
+  request( { method: "HEAD", url: weburl, followAllRedirects: true },
+            function (error, response) {
+              origUrl=response.request.href
+                console.log(origUrl);
+                var document=jsdom.jsdom(null);
+                var a = document.createElement('a');
+                a.href = origUrl;
+                console.log(a.hostname);
+                
+
+                jsdom.env(
+                   origUrl,
+                      ["http://code.jquery.com/jquery.js"],
+                  function (err, window) {
+                    var $ = window.jQuery;
+                     
+                      console.log($('title').text());
+                                
+                    
+                  }
+                );
+            });
+  
+  
+
+        
+
+      
+  
+res.send("success");
+});
+
+routes.get('/processurl',function(req,res){
+   weburl=req.headers.weburl;
+  console.log(weburl);
   //var weburl=req.body.weburl;
   console.log("ok");
       

@@ -59,9 +59,9 @@ app.controller('PostCtrl',[
 			var sitename=elements[0].hostname;
 			var siteTitle=elements[0].title;
 			var req={
-				method:"POST",
+				method:"GET",
 				url:'/processurl',
-				data:{weburl:$scope.url}
+				weburl:$scope.url
 			};
 			$http(req).then(function(res,err){
 				console.log("coming here");
