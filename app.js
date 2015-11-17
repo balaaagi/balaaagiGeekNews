@@ -71,44 +71,35 @@ module.exports = app;
 routes.get('/processTitle',function(req,res){
   var weburl=req.headers.weburl;
   var origUrl=weburl;
+  var hostname,title,link;
   request( { method: "HEAD", url: weburl, followAllRedirects: true },
             function (error, response) {
               origUrl=response.request.href
+              link=origUrl;
                 console.log(origUrl);
                 var document=jsdom.jsdom(null);
                 var a = document.createElement('a');
                 a.href = origUrl;
-                console.log(a.hostname);
-                
-
+                hostname=a.hostname;
+                console.log(hostname);
                 jsdom.env(
                    origUrl,
                       ["http://code.jquery.com/jquery.js"],
                   function (err, window) {
                     var $ = window.jQuery;
-                     
-                      console.log($('title').text());
-                                
+                      title=$('title').text();     
+                        console.log(title);
+    
+                  res.send({'hostname':hostname,'link':link,'title':title});                            
                     
                   }
                 );
             });
-  
-  
+ 
 
         
 
       
   
-res.send("success");
 });
 
-routes.get('/processurl',function(req,res){
-   weburl=req.headers.weburl;
-  console.log(weburl);
-  //var weburl=req.body.weburl;
-  console.log("ok");
-      
-      
-      res.send({"message":"success"});
-}); 

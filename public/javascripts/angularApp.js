@@ -55,27 +55,32 @@ app.controller('PostCtrl',[
 		
 
 		$scope.addPost=function(){
-			var elements = angular.element('<a href="'+$scope.url+'"/>');
-			var sitename=elements[0].hostname;
-			var siteTitle=elements[0].title;
+			
 			var req={
 				method:"GET",
-				url:'/processurl',
-				weburl:$scope.url
+				url:'/processTitle',
+				headers: {
+   				'Content-Type': undefined,
+   				'weburl' : $scope.url
+ 				},
+				data:{ weburl:$scope.url }
 			};
 			$http(req).then(function(res,err){
-				console.log("coming here");
-				console.log(res.data.message);
-				alert(res.body);
+				console.log("Success");
+				$scope.posts.push({
+					title:res.data.title,
+					url:res.data.link,
+					domain: res.data.hostname,
+					date : Date(),
+					upvotes:0
+				});	
+				
+				
+			},function(err){
+				console.log("Error While Processing the URL.. Try Again...!");
 			});
 			
-			$scope.posts.push({
-				title:$scope.title,
-				url:$scope.url,
-				domain: sitename,
-				date : Date(),
-				upvotes:0
-			})
+			
 		$location.url('/home');
 		
 		}; 			
