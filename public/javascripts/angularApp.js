@@ -47,21 +47,37 @@ app.controller('MainCtrl',[
 
 
 app.controller('PostCtrl',[
-	'$scope','$location',
+	'$scope','$location','$http',
 	'posts',
-	function($scope,$location,posts){
+	function($scope,$location,$http,posts){
 		
 		$scope.posts=posts.posts;
 		
 
 		$scope.addPost=function(){
+			var elements = angular.element('<a href="'+$scope.url+'"/>');
+			var sitename=elements[0].hostname;
+			var siteTitle=elements[0].title;
+			var req={
+				method:"POST",
+				url:'/processurl',
+				data:{weburl:$scope.url}
+			};
+			$http(req).then(function(res,err){
+				console.log("coming here");
+				console.log(res.data.message);
+				alert(res.body);
+			});
+			
 			$scope.posts.push({
 				title:$scope.title,
 				url:$scope.url,
+				domain: sitename,
+				date : Date(),
 				upvotes:0
 			})
 		$location.url('/home');
-		$scope.apply();
+		
 		}; 			
 		}
 ]);

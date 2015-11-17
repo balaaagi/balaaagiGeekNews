@@ -25,10 +25,12 @@
 
 			<div ng-repeat="post in posts | orderBy: ['-createddate','-upvotes']  ">
 
-				<span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-chevron-up"></span>
+				<a href=""><span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-triangle-top"></span></a>
 				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
 				<span ng-hide="post.url">{{post.title}}</span>
-				| {{post.upvotes}} (SiteName)
+				| {{post.upvotes}} <span ng-show="post.domain">({{post.domain}})</span>
+				<span ng-hide="post.domain">(Site Domain)</span> | 
+				<span ng-show="post.date">{{post.date | date : 'M/d/yyyy'}}</span>
 				
 
 			</div>
