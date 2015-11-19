@@ -11,10 +11,11 @@
 	<body ng-app="balajinews" >
 		<nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
 		    <ul class="nav navbar-nav">
-		      <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+		      <li ng-show="isLoggedIn()"><a href="#/addPost">Add Post</a></li>
 		      <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
 		      <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
 		      <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+
 		    </ul>
 		  </nav>
 		
@@ -28,20 +29,18 @@
 	 		 <div class="page-header">
 	 			   <h1>Balaji Geeky News</h1>
 	 			   
-	 			   <h2><a ng-show="isLoggedIn()" ng-click="moveToPost()"> Add New Post</a></h2>
+	 			   
 	 		 </div>
 
-			<div ng-repeat="post in posts | orderBy: ['-createdAt','-upvotes']  ">
+			<div class="well well-sm" ng-repeat="post in posts | orderBy: ['-createdAt','-upvotes']  ">
 
 				<a href=""><span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-triangle-top"></span></a>
 				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
 				<span ng-hide="post.url">{{post.title}}</span>
-				| {{post.upvotes}} <span ng-show="post.domain">({{post.domain}})</span>
+				| {{post.upvotes}} <span ng-show="post.domain">({{post.hostname}})</span>
 				<span ng-hide="post.domain">(Site Domain)</span> | 
-				<span ng-show="post.createdAt">{{post.date | date : 'M/d/yyyy'}}</span>
-				<span ng-show="post.author">
-  						posted by <a>{{post.author}}</a> |
-				</span>
+				<span ng-show="post.createdAt">{{post.createdAt | date : 'M/d/yyyy'}}</span>
+				
 				
 
 			</div>
