@@ -23,6 +23,12 @@ function($stateProvider, $urlRouterProvider) {
 		templateUrl:'/post.html',
 		controller:'PostCtrl'
 	},
+	error={
+		name:"error",
+		url:"/error",
+		templateUrl:'/error.html',
+		controller:'MainCtrl'
+	},
 	login= {
 		name:'login', 
 		  url: '/login',
@@ -47,6 +53,7 @@ function($stateProvider, $urlRouterProvider) {
 };
   $stateProvider.state(home);
   $stateProvider.state(post);
+  $stateProvider.state(error);
   $stateProvider.state(login);
   $stateProvider.state(register);
  
@@ -68,10 +75,12 @@ app.controller('MainCtrl',[
 	'posts','auth',
 	function($scope,$state,posts,auth){
 		$scope.isLoggedIn = auth.isLoggedIn;
+
 		$scope.posts=posts.posts;
 		
 
 		$scope.incrementUpvotes=function(post){
+
 			posts.upvote(post);
 		}; 
 
@@ -154,7 +163,7 @@ function($scope, $state, auth){
 }]);
 
 
-app.factory('posts',['$http','auth',function($http,auth){
+app.factory('posts',['$http','auth','$location',function($http,auth,$location){
 	 var o = {
     		posts: []
 			};
@@ -173,11 +182,14 @@ app.factory('posts',['$http','auth',function($http,auth){
   		});
 	};
 
-o.upvote = function(post) {
+	o.upvote = function(post) {
   		return $http.put('/posts/' + post._id + '/upvote', null, {
-    	headers: {Authorization: 'Bearer '+auth.getToken()}
+    		headers: {Authorization: 'Bearer '+auth.getToken()}
   		}).success(function(data){
     	post.upvotes += 1;
+  		}).error(function(err){
+  			window.location='/#/error';
+  			
   		});
 	};
 
