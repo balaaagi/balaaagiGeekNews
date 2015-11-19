@@ -196,7 +196,7 @@ app.factory('posts',['$http','auth','$location',function($http,auth,$location){
   	return o;
 }]);
 
-app.factory('auth', ['$http', '$window', function($http, $window){
+app.factory('auth', ['$http', '$window',function($http, $window){
    var auth = {};
    auth.saveToken = function (token){
   		$window.localStorage['flapper-news-token'] = token;
@@ -231,6 +231,7 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 
 	auth.logOut = function(){
   		$window.localStorage.removeItem('flapper-news-token');
+  		window.location='/#/home';
 	};
   return auth;
 }])

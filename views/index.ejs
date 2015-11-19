@@ -42,9 +42,10 @@
 				<a href=""><span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-triangle-top"></span></a>
 				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
 				<span ng-hide="post.url">{{post.title}}</span>
-				| {{post.upvotes}} <span ng-show="post.hostname">({{post.hostname}})</span>
-				| 
-				<span ng-show="post.createdAt">{{post.createdAt | date : 'M/d/yyyy'}}</span>
+				<span ng-show="post.hostname"><small>({{post.hostname}})</small></span>
+				<br> {{post.upvotes}} 
+				-    
+				<span ng-show="post.createdAt"><small>{{post.createdAt | date : 'M/d/yyyy'}}<small></span>
 				
 				
 
@@ -73,7 +74,7 @@
 	 		 </div>		
 			 <form ng-submit='addPost()'>
 				<input type="text" class="form-control input-sm" placeholder="URL" ng-model="url"></input><br><br>
-				<button ng-click='submit' class="btn btn-primary btn-block">Post</button>
+				<button ng-click='submit' class="btn btn-primary">Post</button>
 			</form>
 		</script>
 
