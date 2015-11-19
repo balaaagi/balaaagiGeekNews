@@ -81,10 +81,10 @@ app.controller('PostCtrl',[
 			});
 			
 			
-		$location.url('/home');
+			$location.url('/home');
 		
-		}; 			
-		}
+	    }; 			
+	}
 ]);
 
 app.factory('posts',[function(){

@@ -6,7 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request=require('request');
 var jsdom=require('jsdom');
-
+var mongoose=require('mongoose');
+require('./models/Posts');
+mongoose.connect('mongodb://localhost/balaaagigeekynews');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
