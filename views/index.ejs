@@ -23,7 +23,7 @@
 	 			   <h2><a ng-click="moveToPost()"> Add New Post</a></h2>
 	 		 </div>
 
-			<div ng-repeat="post in posts | orderBy: ['-createddate','-upvotes']  ">
+			<div ng-repeat="post in posts | orderBy: ['-createddate','-createdAt']  ">
 
 				<a href=""><span ng-click="incrementUpvotes(post)" class="glyphicon glyphicon-triangle-top"></span></a>
 				<a ng-show="post.url" href="{{post.url}}">{{post.title}}</a> 
