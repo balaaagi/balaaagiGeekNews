@@ -55,13 +55,17 @@ app.controller('PostCtrl',[
 	'$scope','$location','$http',
 	'posts',
 	function($scope,$location,$http,posts){
-		
+
 		$scope.posts=posts.posts;
 		
 
 		$scope.addPost=function(){
-			
-			var req={
+		
+		if ($scope.url === '') {
+			return;
+		}
+		
+		var req={
 				method:"GET",
 				url:'/processTitle',
 				headers: {
@@ -72,13 +76,12 @@ app.controller('PostCtrl',[
 			};
 			$http(req).then(function(res,err){
 				console.log("Success");
-				$scope.posts.push({
+				posts.create({
 					title:res.data.title,
 					url:res.data.link,
-					domain: res.data.hostname,
-					date : Date(),
-					upvotes:0
-				});	
+					hostname: res.data.hostname,
+						
+				});
 				
 				
 			},function(err){
@@ -101,7 +104,13 @@ app.factory('posts',['$http',function($http){
 		return $http.get('/posts').success(function(data){
 			angular.copy(data,o.posts);
 		});
-	}		
+	};	
+
+	o.create = function(post) {
+ 		 return $http.post('/posts', post).success(function(data){
+  		  o.posts.push(data);
+  		});
+	};	
   	return o;
 }]);
 
