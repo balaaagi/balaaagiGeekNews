@@ -9,7 +9,12 @@ function($stateProvider, $urlRouterProvider) {
 		name:'home',
 		url:'/home',
 		templateUrl:'/home.html',
-		controller:'MainCtrl'
+		controller:'MainCtrl',
+		resolve:{
+			postPromise:['posts',function(posts){
+				return posts.getAll();
+			}]
+		}
 
 	},
 	post={
@@ -87,14 +92,16 @@ app.controller('PostCtrl',[
 	}
 ]);
 
-app.factory('posts',[function(){
+app.factory('posts',['$http',function($http){
 	 var o = {
-    		posts: [
-    		{title:'post 1',upvotes:5,date:'17-NOV-2015'},
-			{title:'post 2',upvotes:6,date:'17-NOV-2015'},
-			{title:'post 3',upvotes:7,date:'22-NOV-2015'}
-			]
-  			};
+    		posts: []
+			};
+
+	o.getAll=function(){
+		return $http.get('/posts').success(function(data){
+			angular.copy(data,o.posts);
+		});
+	}		
   	return o;
 }]);
 
