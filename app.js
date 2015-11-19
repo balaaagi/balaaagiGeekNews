@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 var request=require('request');
 var jsdom=require('jsdom');
 var mongoose=require('mongoose');
+var passport=require('passport');
+require('./models/Users');
 require('./models/Posts');
+require('./config/passport');
 mongoose.connect('mongodb://localhost/balaaagigeekynews');
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -26,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 app.use('/', routes);
 app.use('/users', users);
 
