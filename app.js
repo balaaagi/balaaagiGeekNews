@@ -8,6 +8,7 @@ var request=require('request');
 var jsdom=require('jsdom');
 var mongoose=require('mongoose');
 var passport=require('passport');
+var http = require('http');
 require('./models/Users');
 require('./models/Posts');
 require('./config/passport');
@@ -18,6 +19,7 @@ var users = require('./routes/users');
 var app = express();
 var weburl;
 
+app.set('port', process.env.PORT || 7575);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -70,6 +72,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var server = http.createServer(app);
+server.listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
 
 module.exports = app;
 
